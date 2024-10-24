@@ -1,0 +1,102 @@
+import pandas as pd
+
+# Definición de los datos
+data = {
+    "CURSO": ["ESTADISTICA I",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "ESTADISTICA I",	"ESTADISTICA I",	"PROBABILIDAD ",	"PROBABILIDAD ",	"ESTADISTICA I",	"ESTADISTICA I",
+              "ESTADISTICA I",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"ESTADISTICA I",	"ESTADISTICA I",	"PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD ",	"ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",
+              "PROBABILIDAD ",	"ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",
+              "ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",	"PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD ",
+              "PROBABILIDAD ",	"ESTADISTICA I",	"ESTADISTICA I",	"ESTADISTICA I",	"PROBABILIDAD ",	"PROBABILIDAD ",
+              "ESTADISTICA I",	"PROBABILIDAD ",	"ESTADISTICA I",	"PROBABILIDAD "],
+
+    "ASISTENCIA": ["50",	"50",	"35",	"60",	"50",	"40",	"50",	"55",	"60",	"40",	"45",	"55",	"60",	"55",	"60",
+                   "60",	"50",	"50",	"60",	"60",	"60",	"60",	"60",	"60",	"45",	"60",	"60",	"40",	"60",	"40",
+                   "60",	"60",	"55",	"45",	"60",	"60",	"45",	"60",	"60",	"60",	"60",	"55",	"60",	"60",	"60",
+                   "60",	"60",	"60",	"45",	"45",	"60",	"55",	"60",	"35",	"60",	"30",	"60",	"60",	"40",	"60",
+                   "50",	"55",	"35",	"40",	"40",	"55",	"35",	"45",	"50",	"55",	"35",	"45",	"40",	"40",	"25",	"50"],
+
+    "PROGRAMA": ["PSICOLOGÍA",	"FINANZAS",	"FINANZAS",	"FINANZAS",	"FINANZAS",	"FINANZAS",	"COMUNICACIÓN",	"COMUNICACIÓN",
+                 "MECATRONICA",	"FINANZAS",	"PSICOLOGÍA",	"PSICOLOGÍA",	"COMUNICACIÓN",	"MECANICA",	"MECANICA",	"ELECTRICA",
+                 "COMUNICACIÓN",	"FINANZAS",	"INDUSTRIAL",	"INDUSTRIAL",	"SISTEMAS",	"COMUNICACIÓN",	"MECATRONICA",	"C_DATOS",
+                 "FINANZAS",	"COMUNICACIÓN",	"PSICOLOGÍA",	"CIVIL",	"PSICOLOGÍA",	"MECANICA",	"SISTEMAS",	"SISTEMAS",
+                 "FINANZAS",	"SISTEMAS",	"FINANZAS",	"SISTEMAS",	"FINANZAS",	"QUIMICA",	"FINANZAS",	"SISTEMAS",
+                 "FINANZAS",	"FINANZAS",	"INDUSTRIAL",	"FINANZAS",	"SISTEMAS",	"INDUSTRIAL",	"SISTEMAS",	"FINANZAS",
+                 "NAVAL",	"PSICOLOGÍA",	"SISTEMAS",	"PSICOLOGÍA",	"DERECHO",	"DERECHO",	"BIOMEDICA",	"DERECHO",
+                 "DERECHO",	"DERECHO",	"DERECHO",	"DERECHO",	"DERECHO",	"DERECHO",	"DERECHO",	"C_DATOS",
+                 "DERECHO",	"SISTEMAS",	"C_DATOS",	"DERECHO",	"PSICOLOGÍA",	"PSICOLOGÍA",	"ECONOMIA",	"ELECTRICA",
+                 "PSICOLOGÍA",	"BIOMEDICA",	"DERECHO",	"CONTADURIA"],
+
+    "EDAD": ["19",	"18",	"18",	"21",	"18",	"18",	"18",	"17",	"18",	"22",	"18",	"18",	"18",	"18",	"18",	"22",
+             "21",	"19",	"18",	"19",	"18",	"19",	"18",	"17",	"19",	"20",	"19",	"18",	"17",	"18",	"20",	"19",
+             "20",	"22",	"18",	"19",	"19",	"18",	"19",	"20",	"19",	"18",	"17",	"19",	"19",	"19",	"19",	"18",
+             "17",	"18",	"19",	"20",	"23",	"18",	"18",	"20",	"18",	"18",	"18",	"18",	"18",	"19",	"17",	"17",
+             "20",	"19",	"18",	"19",	"19",	"21",	"19",	"21",	"17",	"19",	"18",	"18"],
+
+    "URBANO": ["SI",	"SI",	"SI",	"SI",	"SI",	"SI",	"NO",	"SI",	"SI",	"SI",	"NO",	"NO",	"SI",	"SI",	"SI",	"NO",
+               "SI",	"NO",	"NO",	"SI",	"NO",	"NO",	"SI",	"SI",	"SI",	"NO",	"SI",	"SI",	"NO",	"NO",	"SI",	"NO",
+               "SI",	"NO",	"SI",	"SI",	"NO",	"NO",	"NO",	"SI",	"SI",	"NO",	"SI",	"SI",	"SI",	"NO",	"SI",	"NO",
+               "SI",	"NO",	"NO",	"SI",	"SI",	"SI",	"NO",	"SI",	"NO",	"SI",	"SI",	"SI",	"SI",	"NO",	"SI",	"SI",
+               "SI",	"SI",	"SI",	"SI",	"NO",	"SI",	"SI",	"NO",	"SI",	"SI",	"SI",	"NO"],
+
+    "PESO": ["45",	"56",	"67",	"69",	"50",	"61",	"50",	"59",	"70",	"73",	"65",	"65",	"57",	"70",	"80",	"70",
+             "62",	"57",	"60",	"58",	"65",	"72",	"77",	"71",	"48",	"90",	"67",	"55",	"67",	"72",	"67",	"102",
+             "55",	"60",	"60",	"75",	"76",	"55",	"48",	"88",	"50",	"59",	"60",	"60",	"64",	"53",	"49",	"70",
+             "80",	"42",	"59",	"64",	"65",	"80",	"62",	"55",	"60",	"53",	"62",	"69",	"60",	"76",	"78",	"70",
+             "78",	"52",	"55",	"48",	"82",	"65",	"65",	"50",	"50",	"54",	"55",	"60"],
+
+
+    "ESTATURA": ["163",	"160",	"173",	"180",	"158",	"163",	"178",	"160",	"175",	"180",	"174",	"161",
+                 "164",	"178",	"187",	"163",	"167",	"154",	"177",	"164",	"170",	"169",	"175",	"170",
+                 "166",	"186",	"171",	"165",	"169",	"181",	"160",	"179",	"160",	"161",	"171",	"173",
+                 "168",	"167",	"166",	"175",	"155",	"176",	"153",	"158",	"172",	"175",	"158",	"172",
+                 "192",	"155",	"166",	"169",	"152",	"185",	"168",	"164",	"165",	"154",	"164",	"174",
+                 "159",	"164",	"180",	"163",	"170",	"174",	"157",	"167",	"175",	"164",	"172",	"155",
+                 "165",	"164",	"160",	"170"],
+
+    "TRANSPORTE": ["Mototaxi",	"Particular",	"Transcaribe",	"Taxi",	"Taxi",	"Particular",	"Transcaribe",	"Transcaribe",
+                   "bus",	"Mototaxi",	"Transcaribe",	"Mototaxi",	"Particular",	"Mototaxi",	"Mototaxi",	"Mototaxi",
+                   "Transcaribe",	"Transcaribe",	"Particular",	"Transcaribe",	"Transcaribe",	"Particular",	"Transcaribe",	"Transcaribe",
+                   "Transcaribe",	"Transcaribe",	"Mototaxi",	"Transcaribe",	"Mototaxi",	"Particular",	"Transcaribe",	"bus",
+                   "Transcaribe",	"bus",	"Transcaribe",	"Transcaribe",	"bus",	"Mototaxi",	"Particular",	"Transcaribe",
+                   "Mototaxi",	"Transcaribe",	"Transcaribe",	"Transcaribe",	"Transcaribe",	"Mototaxi",	"Transcaribe",	"bus",
+                   "Particular",	"Transcaribe",	"bus",	"Transcaribe",	"Transcaribe",	"bus",	"Taxi",	"Mototaxi",	"bus",
+                   "Mototaxi",	"Transcaribe",	"Transcaribe",	"Transcaribe",	"Mototaxi",	"Transcaribe",	"Mototaxi",
+                   "Taxi",	"Transcaribe",	"Transcaribe",	"Particular",	"Transcaribe",	"Transcaribe",	"Mototaxi",	"bus",
+                   "Transcaribe",	"Transcaribe",	"Taxi",	"bus"],
+
+    "SEXO": ["Femenino",	"Femenino",	"Femenino",	"Masculino",	"Femenino",	"Femenino",	"Masculino",	"Femenino",	"Masculino",	"Masculino",
+             "Masculino",	"Femenino",	"Femenino",	"Masculino",	"Masculino",	"Femenino",	"Femenino",	"Femenino",	"Femenino",	"Femenino",
+             "Masculino",	"Femenino",	"Masculino",	"Masculino",	"Femenino",	"Masculino",	"Femenino",	"Masculino",	"Masculino",	"Masculino",
+             "Masculino",	"Masculino",	"Femenino",	"Masculino",	"Femenino",	"Masculino",	"Femenino",	"Femenino",	"Femenino",	"Masculino",
+             "Femenino",	"Femenino",	"Femenino",	"Femenino",	"Masculino",	"Femenino",	"Femenino",	"Femenino",	"Masculino",	"Femenino",
+             "Masculino",	"Femenino",	"Femenino",	"Masculino",	"Femenino",	"Femenino",	"Femenino",	"Femenino",	"Femenino",	"Masculino",
+             "Femenino",	"Masculino",	"Masculino",	"Femenino",	"Masculino",	"Masculino",	"Masculino",	"Femenino",	"Masculino",
+             "Femenino",	"Masculino",	"Femenino",	"Masculino",	"Femenino",	"Femenino",	"Femenino"],
+
+    "ESTRATO": ["II",	"V",	"IV",	"V",	"III",	"V",	"III",	"II",	"I",	"IV",	"IV",	"III",	"III",	"III",	"II",	"I",	"III",
+                "II",	"II",	"V",	"I",	"II",	"II",	"I",	"II",	"IV",	"I",	"II",	"II",	"V",	"III",	"II",	"II",	"I",	"II",	"I",
+                "I",	"I",	"III",	"III",	"III",	"IV",	"II",	"III",	"III",	"II",	"I",	"II",	"II",	"I",	"II",	"I",	"IV",
+                "III",	"III",	"III",	"I",	"III",	"II",	"I",	"II",	"I",	"III",	"II",	"IV",	"IV",	"IV",	"IV",	"II",	"II",	"II",
+                "II",	"III",	"II",	"IV",	"II"],
+    "GR_SANGUINEO": ["O positivo",	"B positivo",	"B positivo",	"O positivo",	"A positivo",	"A positivo",	"O positivo",	"A positivo",
+                     "A positivo",	"B positivo",	"O positivo",	"O positivo",	"O positivo",	"O positivo",	"O negativo",	"O positivo",
+                     "B positivo",	"O positivo",	"O positivo",	"O positivo",	"B positivo",	"A positivo",	"O positivo",	"O positivo",
+                     "O positivo",	"O positivo",	"A positivo",	"O positivo",	"A positivo",	"O positivo",	"B positivo",	"O positivo",
+                     "O positivo",	"A positivo",	"O positivo",	"O negativo",	"O positivo",	"A positivo",	"O positivo",	"A positivo",
+                     "A positivo",	"B positivo",	"O positivo",	"O positivo",	"B positivo",	"O positivo",	"O positivo",	"O positivo",
+                     "O positivo",	"A positivo",	"O positivo",	"O positivo",	"O positivo",	"A positivo",	"O positivo",	"A positivo",
+                     "A positivo",	"A positivo",	"O positivo",	"O positivo",	"A positivo",	"O positivo",	"O positivo",	"O positivo",
+                     "O positivo",	"O positivo",	"A positivo",	"O positivo",	"A positivo",	"O positivo",	"O positivo",	"A positivo",
+                     "O positivo",	"O positivo",	"O positivo",	"O positivo"]
+}
+
+# Creación del DataFrame
+df = pd.DataFrame(data)
+
